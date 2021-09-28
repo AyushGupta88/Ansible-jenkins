@@ -1,0 +1,21 @@
+- hosts: ec2
+  gather_facts: false
+  become: true
+
+  tasks:
+       
+  - name: Install pip3
+    apt: name=python3-pip state=present 
+    
+  - name: Install docker-py
+    pip: name=docker-py version=1.9.0
+  - name: Copy dockerfile
+    copy: src=/home/ayush/ansible/jenkins/build_src/Dockerfile dest=/home/ubuntu/opt/
+  - name: Copy plugins.txt
+    copy: src=/home/ayush/ansible/jenkins/build_src/plugins.txt dest=/home/ubuntu/opt/
+  - name: Copy groovy file
+    copy: src=/home/ayush/ansible/jenkins/build_src/default-user.groovy dest=/home/ubuntu/opt/
+  - name: Copy docker compose
+    copy: src=/home/ayush/ansible/jenkins/docker-compose.yml dest=/home/ubuntu/opt/
+  - name: Docker-compose up
+    shell: docker-compose -f /home/ubuntu/opt/docker-compose.yml up -d 
