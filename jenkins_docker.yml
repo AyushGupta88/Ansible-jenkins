@@ -1,21 +1,24 @@
-- hosts: ec2
+- hosts: localhost
   gather_facts: false
   become: true
 
   tasks:
-       
+  - name: Creates directory
+    file:
+     path: /opt/docker/jenkins
+     state: directory     
   - name: Install pip3
     apt: name=python3-pip state=present 
     
   - name: Install docker-py
     pip: name=docker-py version=1.9.0
   - name: Copy dockerfile
-    copy: src=/home/ayush/ansible/jenkins/build_src/Dockerfile dest=/home/ubuntu/opt/
+    copy: src=/home/ayush/ansible/jenkins/build_src/Dockerfile dest=/opt/docker/jenkins/
   - name: Copy plugins.txt
-    copy: src=/home/ayush/ansible/jenkins/build_src/plugins.txt dest=/home/ubuntu/opt/
+    copy: src=/home/ayush/ansible/jenkins/build_src/plugins.txt dest=/opt/docker/jenkins/
   - name: Copy groovy file
-    copy: src=/home/ayush/ansible/jenkins/build_src/default-user.groovy dest=/home/ubuntu/opt/
+    copy: src=/home/ayush/ansible/jenkins/build_src/default-user.groovy dest=/opt/docker/jenkins/
   - name: Copy docker compose
-    copy: src=/home/ayush/ansible/jenkins/docker-compose.yml dest=/home/ubuntu/opt/
+    copy: src=/home/ayush/ansible/jenkins/docker-compose.yml dest=/opt/docker/jenkins/
   - name: Docker-compose up
-    shell: docker-compose -f /home/ubuntu/opt/docker-compose.yml up -d 
+    shell: docker-compose -f /opt/docker/jenkins/docker-compose.yml up -d 
