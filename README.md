@@ -34,6 +34,7 @@ The directory structure after cloning will be as shown below
 
 1 directory, 10 files
 ```
+## change the paths in files wherever required.
 Now we have the customized dockerfile for customized jenkins server.
 A docker-compose file for deploying jenkins server over docker.
 A master.yml file which runs two playbooks 
